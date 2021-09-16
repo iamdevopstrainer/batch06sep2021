@@ -1,11 +1,43 @@
 pipeline {
-    agent any
+  agent any
 
-    stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-            }
+  stages {
+  	stage('Checkout') {
+  	  steps {
+  		git 'https://github.com/edureka-git/DevOpsClassCodes'
+  	  }
+  	}
+
+  	stage('SampleCompile') {
+  	  steps {
+  		dir('') {
+  		  sh '/home/jenkins/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven-3.6.0/bin/mvn compile'
+  		}
+  	  }
+  	}
+
+  	stage('Demo1') {
+  	  steps {
+  		dir('') {
+  		  sh '/home/jenkins/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven-3.6.0/bin/mvn tes'
+  		}
+  	  }
+  	}
+
+  	stage('Package') {
+  	  steps {
+  		dir('') {
+  		  sh '/home/jenkins/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven-3.6.0/bin/mvn package'
+  		}
+  	  }
+  	}
+  	stage('Deployment') {
+  	  steps {
+        // Deployment
+  		script {
+  		  echo "deployment"
         }
-    }
+  	  }
+  	}
+  }
 }
