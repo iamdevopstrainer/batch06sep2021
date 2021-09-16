@@ -12,6 +12,7 @@ pipeline {
   	  steps {
   		dir('') {
   		  sh '/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/myMaven-3.6.0/bin/mvn compile'
+        sh 'ech Completed'
   		}
   	  }
   	}
