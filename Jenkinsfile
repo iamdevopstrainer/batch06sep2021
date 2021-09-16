@@ -11,7 +11,7 @@ pipeline {
   	stage('SampleCompile') {
   	  steps {
   		dir('') {
-  		  sh '/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven-3.6.0/bin/mvn compile'
+  		  sh '/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/myMaven-3.6.0/bin/mvn compile'
   		}
   	  }
   	}
@@ -19,7 +19,7 @@ pipeline {
   	stage('Demo1') {
   	  steps {
   		dir('') {
-  		  sh '/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven-3.6.0/bin/mvn tes'
+  		  sh '/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/myMaven-3.6.0/bin/mvn test'
   		}
   	  }
   	}
@@ -27,7 +27,7 @@ pipeline {
   	stage('Package') {
   	  steps {
   		dir('') {
-  		  sh '/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven-3.6.0/bin/mvn package'
+  		  sh '/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/myMaven-3.6.0/bin/mvn package'
   		}
   	  }
   	}
