@@ -1,0 +1,116 @@
+root@ubuntu-master01:~/k8s# cat mypod.yml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod1
+  labels:
+    app: myappA
+spec:
+  containers:
+  - image: httpd
+    name: mycont1
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod2
+  labels:
+    app: myappB
+spec:
+  containers:
+  - image: httpd
+    name: mycont2
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod3
+  labels:
+    app: myappA
+spec:
+  containers:
+  - image: httpd
+    name: mycont3
+    ports:
+    - containerPort: 80
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s# cat httpd-dep.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: myapp-dep
+  name: myhttpd-dep
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp-pod
+  template:
+    metadata:
+      labels:
+        app: myapp-pod
+    spec:
+      containers:
+      - image: iamdevopstrainer/httpd:v1
+        name: httpd-cont
+        ports:
+        - containerPort: 80
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s# cat httpd-svc.yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-svc
+spec:
+  ports:
+  - port: 8888
+    nodePort: 31000
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: myapp-pod
+  type: NodePort
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s# cat daemon-set.yml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: httpd-dep
+spec:
+  selector:
+    matchLabels:
+      app: httpd-app
+  template:
+    metadata:
+      name: httpd-pod
+      labels:
+        app: httpd-app
+    spec:
+      containers:
+      - name: httpd-container
+        image: iamdevopstrainer/httpd:v1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s#
+root@ubuntu-master01:~/k8s#
